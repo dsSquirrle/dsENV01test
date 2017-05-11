@@ -2533,36 +2533,6 @@ dsidx.auth = function() {
                     }
                 });
                 m && a("#dsidx-login .dsidx-dialog-message").show().html(m)
-                          var m = dsidx.pluginUrl + "client-assist.php?action=Login";
-            if (dsidx.useWPAjax) m = dsidxAjaxHandler.ajaxurl + "?action=dsidx_client_assist&dsidx_action=Login";
-            a.ajax({
-                type: "POST",
-                url: m,
-                data: a("#dsidx-login form").serialize(),
-                dataType: "json",
-                success: function(n) {
-                    a("#dsidx-login-submit").val("Login");
-                    if (n.Success) {
-                        n = e("dsidx-visitor-auth");
-                        if (canUseSSO) {
-                            n = g(n);
-                            window.location = n
-                        } else {
-                            n = location.href.split("?")[0];
-                            var r = q(),
-                                t = p();
-                            if (t.indexOf("origin") != -1) window.location = decodeURIComponent(t.origin);
-                            else if (r) window.location = "?" + r;
-                            else {
-                                alert("path");
-                                window.location = n
-                            }
-                        }
-                        dsidx.trackEvent("Registration", "/IDX/Visitor LoggedIn")
-                    } else a("#dsidx-login .dsidx-dialog-message").show().html(n.Message)
-                }
-            });
-            a("#dsidx-login-submit").val("Sending...");
             },
             Register: function(m) {
                 this.CloseAll();
@@ -2886,7 +2856,7 @@ dsidx.profile = function(d) {
         });
         d("#dsidx-profile-loggedout .dsidx-profile-button").click(function() {
             q.Hide("#dsidx-profile-share", jQuery("#dsidx-profile-share"), jQuery("#dsidx-profile-sharing-button"));
-            dsidx.auth.Login();
+            dsidx.auth.LoginWithSso();
             return false
         });
         d("#dsidx-savesearch").length && d("#dsidx-savesearch").dialog({
